@@ -6,36 +6,25 @@ import helmet from 'helmet';
 
 import logger from './utils/logger';
 import morganMiddleware from './middlewares/morgan.middleware';
-
+import corsOptions from './config/corsOptions.json';
 dotenv.config();
 
 const app: Express = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'frontend/assets')));
-app.use(
-  '/modules',
-  express.static(
-    path.join(
-      __dirname,
-      process.env.NODE_ENV !== 'production' ? '../node_modules' : 'node_modules'
-    )
-  )
-);
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet());
 
 app.use(morganMiddleware);
 
 // Router
-import indexRoutes from './routes';
 import apiRoutes from './routes/api';
 import hookRoutes from './routes/hook';
 
-app.use('/', indexRoutes);
 app.use('/api', apiRoutes);
 app.use('/hook', hookRoutes);
 
