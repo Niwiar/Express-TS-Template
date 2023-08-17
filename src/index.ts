@@ -30,17 +30,14 @@ app.use(helmet());
 
 app.use(morganMiddleware);
 
-// Endpoints
-
+// Router
+import indexRoutes from './routes';
 import apiRoutes from './routes/api';
 import hookRoutes from './routes/hook';
 
+app.use('/', indexRoutes);
 app.use('/api', apiRoutes);
 app.use('/hook', hookRoutes);
-
-app.use('/*', async (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, 'frontend/index.html'));
-});
 
 import http from 'http';
 import { socketIO, socketServer } from './libs/socket-io';

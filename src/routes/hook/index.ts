@@ -1,6 +1,4 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { encrypt } from '../../utils/encrypt';
-import logger from '../../utils/logger';
 
 const router: Router = express.Router();
 
